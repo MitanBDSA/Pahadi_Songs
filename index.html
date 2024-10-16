@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kesi Hoo Nehu - Music Playlist</title>
+    <style>
+        body {
+            font-family: 'Georgia', serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* Keep content at the top */
+            align-items: center;
+            background: rgb(0, 0, 0);
+            color: white;
+            transition: color 2s ease;
+        }
+
+        h1 {
+            color: inherit;
+            margin-top: 20px;
+            font-size: 28px;
+            text-align: center;
+            text-shadow: 2px 2px 5px #000000; /* Highlighting with shadow */
+            border: 2px solid rgba(255, 255, 255, 0.5); /* Border highlight */
+            padding: 10px 20px;
+            border-radius: 10px; /* Rounded edges */
+        }
+
+        .song-list {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            width: 100%;
+            padding: 10px;
+        }
+
+        .song-item {
+            margin: 10px 0;
+            width: 80%;
+            max-width: 400px;
+        }
+
+        a {
+            display: block;
+            text-align: center;
+            text-decoration: none;
+            color: white; /* White text for contrast */
+            background-color: rgba(20, 20, 20, 0.8); /* Dark background */
+            padding: 12px 25px;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: bold;
+            font-family: 'Times New Roman', serif;
+            transition: all 0.3s;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.7); /* Highlight with shadow */
+        }
+
+        a:hover {
+            background-color: rgba(50, 50, 50, 0.9); /* Slight highlight on hover */
+            transform: scale(1.05);
+        }
+
+        footer {
+            margin-top: 40px;
+            font-size: 24px;
+            color: inherit;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <h1>Kesi Hoo mere Dost - Welcome to your Music 🎶 🎵 Playlist</h1>
+    
+    <div class="song-list">
+        <!-- Song 1: Bhalu Lagadu Bhanuli -->
+        <div class="song-item">
+            <a href="https://drive.google.com/uc?export=download&id=1CECf4u7-bFcnR9JjhoynQOzaKlIoc1oy" download>🔥 Bhalu Lagadu Bhanuli 🔥</a>
+        </div>
+        
+        <!-- Song 2: Garhwali Song Remix 1 -->
+        <div class="song-item">
+            <a href="https://drive.google.com/uc?export=download&id=1CF5LjAn3cRUJNuKtbQGBWMuk8Iwqzjqq" download>🎶 Garhwali Song Remix 1 🎶</a>
+        </div>
+        
+        <!-- Song 3: Garhwali Song Remix 2 -->
+        <div class="song-item">
+            <a href="https://drive.google.com/uc?export=download&id=1CNEYiLDBLfgX17Rjf5Qvw8PqHcDLgsfd" download>🎵 Garhwali Song Remix 2 🎵</a>
+        </div>
+    </div>
+    
+    <footer>
+        <p>Enjoy your music and isko apne dosto ke saath bhi share karna 😁😁</p>
+    </footer>
+
+    <canvas id="rgbCanvas"></canvas>
+
+    <script>
+        const canvas = document.getElementById('rgbCanvas');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+
+        function resizeCanvas() {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        }
+
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        let r = 50, g = 60, b = 120;
+        let rSpeed = 0.4, gSpeed = 0.5, bSpeed = 0.6;
+
+        function draw() {
+            r += rSpeed;
+            g += gSpeed;
+            b += bSpeed;
+
+            if (r > 90 || r < 50) rSpeed *= -1;
+            if (g > 100 || g < 60) gSpeed *= -1;
+            if (b > 160 || b < 120) bSpeed *= -1;
+
+            ctx.fillStyle = `rgb(${r}, ${g}, ${b})`;
+            ctx.fillRect(0, 0, width, height);
+
+            ctx.fillStyle = 'rgba(255, 223, 0, 0.2)';
+            for (let i = 0; i < 50; i++) {
+                ctx.beginPath();
+                ctx.arc(Math.random() * width, Math.random() * height, Math.random() * 3, 0, 2 * Math.PI);
+                ctx.fill();
+            }
+
+            const brightness = Math.sqrt(
+                0.299 * (r * r) + 0.587 * (g * g) + 0.114 * (b * b)
+            );
+
+            document.body.style.color = brightness > 150 ? 'black' : 'white';
+        }
+
+        function animate() {
+            draw();
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+    </script>
+</body>
+</html>
